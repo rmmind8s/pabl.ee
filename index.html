@@ -130,14 +130,7 @@
             return colors[Math.floor(Math.random() * colors.length)];
         }
 
-        function getRandomText() {
-            const texts = [
-                'Hey there! 👋', 'How are you doing?', 'That sounds great!',
-                'I totally agree', 'Awesome! 🎉', 'Tell me more',
-                'That\'s interesting', 'Love this idea', 'Let\'s do it!'
-            ];
-            return texts[Math.floor(Math.random() * texts.length)];
-        }
+        // removed automatic/random initial messages — messages must be entered by hand
 
         function addMessage(text) {
             const messagesDiv = document.getElementById('messages');
@@ -151,24 +144,24 @@
 
         function sendMessage() {
             const input = document.getElementById('input');
-            const text = input.value.trim() || getRandomText();
-            if (text) {
-                addMessage(text);
-                input.value = '';
+            const text = input.value.trim();
+            if (!text) return; // require manual input
+
+            const headerTitle = document.getElementById('firstMessage');
+            if (headerTitle && !headerTitle.textContent) {
+                headerTitle.textContent = text;
+                headerTitle.title = text;
             }
+
+            addMessage(text);
+            input.value = '';
         }
 
         document.getElementById('input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
 
-        const first = getRandomText();
-        const headerTitle = document.getElementById('firstMessage');
-        if (headerTitle) {
-            headerTitle.textContent = first;
-            headerTitle.title = first;
-        }
-        addMessage(first);
+        // No initial message; header will be set when the user sends the very first message.
     </script>
 </body>
 </html>

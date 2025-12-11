@@ -223,7 +223,8 @@
         function autoResize(el) {
             if (!el) return;
             if (!el.value.trim()) {
-                el.style.height = '28px';
+                //el.style.height = '28px';
+                el.style.removeProperty
                 return;
             }
             el.style.height = 'auto';

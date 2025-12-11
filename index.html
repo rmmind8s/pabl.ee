@@ -57,6 +57,24 @@
             border-top: 1px solid #eee;
         }
 
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: #111;
+            color: #fff;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .header .title {
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
         input {
             flex: 1;
             border: 1px solid #ddd;
@@ -95,6 +113,9 @@
 </head>
 <body>
     <div class="chat-container">
+        <div class="header">
+            <div class="title" id="firstMessage" title=""></div>
+        </div>
         <div class="messages" id="messages"></div>
         <div class="footer">
             <input type="text" id="input" placeholder="Type a message..." />
@@ -141,7 +162,13 @@
             if (e.key === 'Enter') sendMessage();
         });
 
-        addMessage(getRandomText());
+        const first = getRandomText();
+        const headerTitle = document.getElementById('firstMessage');
+        if (headerTitle) {
+            headerTitle.textContent = first;
+            headerTitle.title = first;
+        }
+        addMessage(first);
     </script>
 </body>
 </html>

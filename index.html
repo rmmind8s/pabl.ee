@@ -138,7 +138,13 @@
 <body>
     <div class="chat-container">
         <div class="header">
+            <button class="icon-btn" id="newTabBtn" title="Open in new tab" onclick="openNewTab()">
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
             <div class="title" id="firstMessage" title=""></div>
+            <button class="icon-btn" id="logoutBtn" title="Logout / Close tab" onclick="logout()">
+                <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+            </button>
         </div>
         <div class="messages" id="messages"></div>
         <div class="footer">
@@ -186,6 +192,22 @@
         });
 
         // No initial message; header will be set when the user sends the very first message.
+
+        function openNewTab() {
+            try {
+                window.open(window.location.href, '_blank', 'noopener');
+            } catch (e) {
+                console.warn('Failed to open new tab', e);
+            }
+        }
+
+        function logout() {
+            try {
+                window.close();
+            } catch (e) {
+                console.warn('Failed to close window', e);
+            }
+        }
     </script>
 </body>
 </html>

@@ -202,6 +202,21 @@
         }
 
         function logout() {
+            const msg = 'All your messages will be removed. Click Yes to proceed, No to cancel.';
+            if (!confirm(msg)) return;
+
+            const messagesDiv = document.getElementById('messages');
+            if (messagesDiv) messagesDiv.innerHTML = '';
+
+            const headerTitle = document.getElementById('firstMessage');
+            if (headerTitle) {
+                headerTitle.textContent = '';
+                headerTitle.title = '';
+            }
+
+            const input = document.getElementById('input');
+            if (input) input.value = '';
+
             try {
                 window.close();
             } catch (e) {

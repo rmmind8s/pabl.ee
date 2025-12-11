@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
+    <script src="https://kit.fontawesome.com/11da5eb453.js" crossorigin="anonymous"></script>
     <style>
         * {
             margin: 0;
@@ -60,16 +61,35 @@
         .header {
             display: flex;
             align-items: center;
-            padding: 0 16px;
+            padding: 0 12px;
             height: 56px;
             background: #111;
             color: #fff;
             border-bottom: 1px solid rgba(255,255,255,0.06);
             overflow: hidden;
+            gap: 8px;
+        }
+
+        .header .icon-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.03);
+            border: none;
+            color: inherit;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .header .icon-btn:hover {
+            background: rgba(255,255,255,0.06);
         }
 
         .header .title {
-            width: 100%;
+            flex: 1 1 auto;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;

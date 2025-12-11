@@ -43,7 +43,6 @@
             width: fit-content;
             max-width: 80%;
             padding: 12px 16px;
-            border-radius: 16px;
             background: white;
             border: 2px solid;
             word-wrap: break-word;
@@ -54,8 +53,9 @@
         .footer {
             display: flex;
             gap: 8px;
-            padding: 16px;
+            padding: 12px 16px;
             border-top: 1px solid #eee;
+            align-items: flex-end;
         }
 
         .header {
@@ -99,17 +99,25 @@
             max-height: 40px;
         }
 
-        input {
+        textarea, input {
             flex: 1;
             border: 1px solid #ddd;
-            border-radius: 24px;
+            border-radius: 16px;
             padding: 12px 16px;
             font-size: 14px;
             outline: none;
             transition: border-color 0.2s;
         }
 
-        input:focus {
+        textarea {
+            resize: none;
+            min-height: 40px;
+            max-height: 200px;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+
+        textarea:focus, input:focus {
             border-color: #999;
         }
 
@@ -148,7 +156,7 @@
         </div>
         <div class="messages" id="messages"></div>
         <div class="footer">
-            <input type="text" id="input" placeholder="Type a message..." />
+            <textarea id="input" placeholder="Type a message..." maxlength="512"></textarea>
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -185,11 +193,29 @@
 
             addMessage(text);
             input.value = '';
+            if (typeof autoResize === 'function') autoResize(input);
         }
 
-        document.getElementById('input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
+        // textarea auto-resize and Enter handling (Enter = send, Shift+Enter = newline)
+        const textarea = document.getElementById('input');
+        function autoResize(el) {
+            if (!el) return;
+            el.style.height = 'auto';
+            const h = Math.min(el.scrollHeight, 200);
+            el.style.height = h + 'px';
+        }
+
+        if (textarea) {
+            textarea.addEventListener('input', () => autoResize(textarea));
+            textarea.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            // init height
+            autoResize(textarea);
+        }
 
         // No initial message; header will be set when the user sends the very first message.
 
@@ -202,7 +228,7 @@
         }
 
         function logout() {
-            const msg = 'All your messages will be removed. Click Yes to proceed, No to cancel.';
+            const msg = 'All your messages will be removed. Please confirm you want to do that.';
             if (!confirm(msg)) return;
 
             const messagesDiv = document.getElementById('messages');
